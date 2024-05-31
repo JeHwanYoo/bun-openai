@@ -1,14 +1,31 @@
-import { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 import { EchoService } from './echo.service.ts'
+import { EchoRepository } from './echo.repository.ts'
+import * as mongoose from 'mongoose'
 
-export const echoController = <Route extends string>(config: {
-  prefix: Route
-}) =>
+export const EchoController = <Path extends string>(config: { prefix: Path }) =>
   new Elysia({
     name: 'echoController',
     seed: config,
   })
-    .decorate('Service', new EchoService())
-    .get('/echo/:message', ({ params: { message }, Service }) =>
-      Service.echo(message),
+    .model({
+      echo: t.Object({
+        _id: t.String({ pattern: '^[0-9a-fA-F]{24}$' }),
+        message: t.String(),
+      }),
+    })
+    .decorate('Service', new EchoService(new EchoRepository()))
+    .get('/echo/:_id', ({ params: { _id }, Service }) =>
+      Service.findOne(new mongoose.Types.ObjectId(_id)),
+    )
+    .post(
+      '/echo',
+      ({ body, Service }) =>
+        Service.save({
+          ...body,
+          _id: new mongoose.Types.ObjectId(body._id),
+        }),
+      {
+        body: 'echo',
+      },
     )
