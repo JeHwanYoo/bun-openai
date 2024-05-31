@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia'
-import { echoController } from './controllers/echo.controller.ts'
+import { echoController } from './echo'
 
 const APP_PORT = Number(process.env.APP_PORT ?? 3000)
 
