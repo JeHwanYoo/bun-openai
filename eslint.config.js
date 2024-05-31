@@ -9,6 +9,7 @@ export default [
   ...tsesLint.configs.recommended,
   eslintPluginPrettier,
   {
+    ignores: ['bun.lockb'],
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
