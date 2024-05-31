@@ -1,7 +1,11 @@
 import * as mongoose from 'mongoose'
-import { Elysia } from 'elysia'
 
-export const Mongoose = async (connectString: string) =>
-  new Elysia().onBeforeHandle(async () => {
-    await mongoose.connect(connectString)
-  })
+export const connectMongo = async (connectString: string, dbName: string) => {
+  try {
+    await mongoose.connect(connectString, { dbName })
+    console.log('Connected', connectString)
+  } catch (e) {
+    console.error('connectMongo', e)
+    process.exit(1)
+  }
+}

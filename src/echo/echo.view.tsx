@@ -1,10 +1,15 @@
-export const EchoView = () => (
-  <html lang="en">
-    <head>
-      <title>Hello World</title>
-    </head>
-    <body>
-      <h1>Hello World</h1>
-    </body>
-  </html>
-)
+export const EchoView = () => {
+  return (
+    <html lang="en">
+      <head>
+        <title>Echo</title>
+      </head>
+      <body>
+        <form method={'post'}>
+          <input name={'message'} placeholder={'메세지를 입력하세요'} />
+          <button type={'submit'}>제출</button>
+        </form>
+      </body>
+    </html>
+  )
+}

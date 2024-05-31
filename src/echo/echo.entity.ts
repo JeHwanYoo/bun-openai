@@ -10,3 +10,5 @@ export const EchoSchema = new mongoose.Schema<IEcho>({
 })
 
 export const EchoEntity = mongoose.model<IEcho>('Echo', EchoSchema)
+
+EchoSchema.set('toObject', { versionKey: false })

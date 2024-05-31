@@ -11,7 +11,6 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
   })
     .model({
       echo: t.Object({
-        _id: t.String({ pattern: '^[0-9a-fA-F]{24}$' }),
         message: t.String(),
       }),
     })
@@ -19,15 +18,7 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
     .get('/echo/:_id', ({ params: { _id }, Service }) =>
       Service.findOne(new mongoose.Types.ObjectId(_id)),
     )
-    .post(
-      '/echo',
-      ({ body, Service }) =>
-        Service.save({
-          ...body,
-          _id: new mongoose.Types.ObjectId(body._id),
-        }),
-      {
-        body: 'echo',
-      },
-    )
+    .post('/echo', ({ body, Service }) => Service.save(body), {
+      body: 'echo',
+    })
     .get('/echo', EchoView)
