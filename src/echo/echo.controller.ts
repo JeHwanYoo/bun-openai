@@ -2,6 +2,7 @@ import { Elysia, t } from 'elysia'
 import { EchoService } from './echo.service.ts'
 import { EchoRepository } from './echo.repository.ts'
 import * as mongoose from 'mongoose'
+import { EchoView } from './echo.view.tsx'
 
 export const EchoController = <Path extends string>(config: { prefix: Path }) =>
   new Elysia({
@@ -29,3 +30,4 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
         body: 'echo',
       },
     )
+    .get('/echo', EchoView)
